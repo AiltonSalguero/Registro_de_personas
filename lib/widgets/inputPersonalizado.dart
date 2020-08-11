@@ -126,3 +126,41 @@ Widget inputDialogNumber(
     ),
   );
 }
+
+Widget inputPrincipalNumber(String texto, TextEditingController controller, Function enviarDatos) {
+  return Container(
+    height: 100.0,
+    width: double.infinity,
+    child: Padding(
+      padding: const EdgeInsets.all(
+        24.0,
+      ),
+      child: TextField(
+        inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+        keyboardType: TextInputType.number,
+        onSubmitted: enviarDatos,
+        controller: controller,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.black,
+              width: 4.0,
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(
+                28.0,
+              ),
+            ),
+          ),
+          filled: true,
+          hintStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 16.0,
+          ),
+          hintText: texto,
+          fillColor: Colors.white,
+        ),
+      ),
+    ),
+  );
+}

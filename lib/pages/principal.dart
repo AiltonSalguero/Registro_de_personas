@@ -6,14 +6,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:registro/dao/sesion.dart';
-import 'package:registro/model/libro.dart';
 import 'package:registro/util/screen.dart';
 import 'package:registro/util/temaPersonlizado.dart';
-import 'package:registro/util/utilFunctions.dart';
 import 'package:registro/widgets/inputPersonalizado.dart';
 import 'package:registro/widgets/labelPerzonalizado.dart';
 import 'package:registro/widgets/botonPersonalizado.dart';
-
+import 'package:registro/dao/dao2.dart';
 class PrincipalPage extends StatefulWidget {
   @override
   _PrincipalPageState createState() => _PrincipalPageState();
@@ -29,7 +27,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("lista_libros");
+    print("principal");
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Stack(
@@ -78,7 +76,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
               ),
               child: Column(
                 children: <Widget>[
-                  titulo1Label("75369524"),
+                  titulo1Label(Sesion.compradorActual.dni),
                   _buildEstadoPersona(),
                 ],
               ),
@@ -98,7 +96,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
         child: Icon(
           Icons.refresh,
         ),
-        onPressed: () =>{},
+        onPressed: () =>_mostrarEstado(dniController.text),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
@@ -130,14 +128,20 @@ class _PrincipalPageState extends State<PrincipalPage> {
             Radius.circular(16.0),
           ),
         ),
-        child: Row(children: <Widget>[
-          Column(children: <Widget>[
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
             Text("Estado: "),
-            Text("Habilitado"),
+            Text(Sesion.estadoComprador),
           ],),
-          Column(children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
             Text("Ultima fecha de entrada: "),
-            Text("8 de agosto, 1:40pm"),
+            Text(Sesion.ultimaFechaMostrada.toString()),
           ],)
         ],)
       ),
@@ -147,12 +151,30 @@ class _PrincipalPageState extends State<PrincipalPage> {
   Widget _buildDniInput() {
     return Align(
       alignment: Alignment(0, -0.62),
-      child: inputPrincipal("Ingrese DNI", dniController)
+      child: inputPrincipalNumber("Ingrese DNI", dniController, _mostrarEstado(dniController.text))
 
     );
   }
 
   _irAmiPerfil() {
     Navigator.of(context).pushReplacementNamed('/perfil');
+  }
+
+  _mostrarEstado(String dni){
+
+    Sesion.compradorActual = Dao.obtenerCompradorConDni(dni);
+    var fechaActual = new DateTime.now();
+    var fechaNuevoIngreso = Sesion.compradorActual.fechaSalida.add(Duration(hours: 23));
+    String estado;
+    if(fechaActual.isAfter(fechaNuevoIngreso)){
+      estado = "Habiltado";
+    }else{
+      estado = "No habilitado";
+    }
+
+    setState(() {
+      Sesion.estadoComprador = estado;
+      Sesion.ultimaFechaMostrada = Sesion.compradorActual.fechaIngreso;
+    });
   }
 }

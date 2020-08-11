@@ -4,6 +4,7 @@
   Por limpiar
 */
 
+import 'package:registro/model/comprador.dart';
 import 'package:registro/model/libro.dart';
 import 'package:registro/model/usuario.dart';
 
@@ -28,4 +29,13 @@ class Sesion {
   static ListaLibros librosDelUsuarioSeleccionado = ListaLibros();
 
   // que se guarden los datos en estas variables estaticas?
+
+
+
+
+  // Comprador actual
+  static Comprador compradorActual = Comprador("Dni", "Nombres", "Apellidos");
+  static String estadoComprador = "";
+  static var ultimaFechaMostrada;
+
 }
