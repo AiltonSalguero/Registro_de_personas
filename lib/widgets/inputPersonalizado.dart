@@ -138,7 +138,7 @@ Widget inputPrincipalNumber(String texto, TextEditingController controller, Func
       child: TextField(
         inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
         keyboardType: TextInputType.number,
-        onSubmitted: enviarDatos,
+        onTap: () => enviarDatos ,
         controller: controller,
         decoration: InputDecoration(
           border: OutlineInputBorder(

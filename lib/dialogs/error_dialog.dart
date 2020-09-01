@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:registro/util/confirmAction.dart';
 
-Future<ConfirmAction> errorLoginDialog(
+Future<ConfirmAction> errorDialogAlert(
     BuildContext context, String titulo, String contenido) {
   // Opcion con varios idiomas
   return showDialog<ConfirmAction>(

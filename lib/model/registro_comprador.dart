@@ -3,20 +3,23 @@
    
    Por limpiar
 */
-class Comprador {
-  String dni;
+class RegistroComprador {
+  int idMercado;
+  String dniComprador;
   String nombres;
   String apellidos;
   var fechaIngreso;
   var fechaSalida;
 
-  Comprador(this.dni, this.nombres, this.apellidos) {
-    this.fechaIngreso = DateTime.parse("2020-05-20 13:18:04Z");  
-    this.fechaSalida = DateTime.parse("2020-05-20 13:30:06Z");  
+  RegistroComprador() {
+    this.dniComprador = "";
+    this.nombres = "";
+    this.apellidos = "";
   }
 
-  Comprador.fromJson(Map<String, dynamic> json) {
-    dni = json['dni'];
+  RegistroComprador.fromJson(Map<String, dynamic> json) {
+    idMercado = json["idMercado"];
+    dniComprador = json['dniComprador'];
     nombres = json['nombres'];
     apellidos = json['apellidos'];
     fechaIngreso = json['fechaIngreso'];
@@ -25,7 +28,8 @@ class Comprador {
 
   Map<String, dynamic> toJson() {
     final data = Map<String, dynamic>();
-    data['dni'] = this.dni;
+    data["idMercado"] = this.idMercado;
+    data['dniComprador'] = this.dniComprador;
     data['nombres'] = this.nombres;
     data['apellidos'] = this.apellidos;
     data['fechaIngreso'] = this.fechaIngreso;
@@ -34,15 +38,15 @@ class Comprador {
   }
 }
 
-class ListaCompradores {
-  List<Comprador> lista = List<Comprador>();
+class ListaRegistroComprador {
+  List<RegistroComprador> lista = List<RegistroComprador>();
 
-  ListaCompradores({this.lista});
+  ListaRegistroComprador({this.lista});
 
-  ListaCompradores.fromJson(List<dynamic> json) {
+  ListaRegistroComprador.fromJson(List<dynamic> json) {
     if (json != null) {
       json.forEach((v) {
-        lista.add(Comprador.fromJson(v));
+        lista.add(RegistroComprador.fromJson(v));
       });
     }
   }

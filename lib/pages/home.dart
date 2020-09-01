@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:registro/dao/dao.dart';
 import 'package:registro/dao/sesion.dart';
 import 'package:registro/util/screen.dart';
 import 'package:registro/widgets/botonPersonalizado.dart';
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
     print("home");
 
     main();
+    Dao();
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -44,7 +46,6 @@ class _HomePageState extends State<HomePage> {
                 height: Screen.height * 0.05,
               ),
               _loginButton(),
-              _registroButton(),
               Text(
                 "#MantengaSuDistancia",
                 style: TextStyle(
@@ -60,18 +61,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _loginButton() {
-    return botonPrincipal(_loginButtonAccion, "Login");
+    return botonPrincipal(_loginButtonAccion, "Ingreso");
   }
 
   _loginButtonAccion() {
     Navigator.of(context).pushNamed('/login');
-  }
-
-  Widget _registroButton() {
-    return botonSecundario(_registerButtonAccion, "Registro");
-  }
-
-  _registerButtonAccion() {
-    Navigator.of(context).pushNamed('/registro');
   }
 }

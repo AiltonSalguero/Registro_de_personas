@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:registro/dao/sesion.dart';
-import 'package:registro/dao/usuario_dao.dart';
 import 'package:registro/util/confirmAction.dart';
 import 'package:registro/dialogs/error_dialog.dart';
 import 'package:registro/util/screen.dart';
@@ -43,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
             //crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               titulo1Label("Login"),
-              inputPrincipal("Nickname", nickname),
+              inputPrincipal("Codigo", nickname),
               inputSecundario("Contraseña", contrasenia),
               _ingresarButton(),
             ],
@@ -61,12 +59,12 @@ class _LoginPageState extends State<LoginPage> {
     print("Validando");
     // si no hay datos que se ponga de color celeste turquesa
     if (nickname.text.isEmpty || contrasenia.text.isEmpty)
-      return errorLoginDialog(
-          context, "No hay datos", "Escriba el nickname y la contraseña.");
+      return errorDialogAlert(
+          context, "No hay datos", "Escriba el codigo y la contraseña.");
     if (nickname.text.isEmpty)
-      return errorLoginDialog(context, "No hay datos", "Escriba un nickname");
+      return errorDialogAlert(context, "No hay datos", "Escriba un codigo");
     if (nickname.text.isEmpty)
-      return errorLoginDialog(
+      return errorDialogAlert(
           context, "No hay datos", "Escriba una contraseña");
     _logearUsuario();
     //UsuarioDao.existeUsuario(nickname.text, contrasenia.text, context)
@@ -80,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _abrirErrorLoginDialog(String nickname) async {
-    final ConfirmAction action = await errorLoginDialog(
+    final ConfirmAction action = await errorDialogAlert(
         context, "Usuario incorrecto", "Escribe bien los datos.");
   }
 
