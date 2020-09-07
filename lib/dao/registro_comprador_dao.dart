@@ -11,11 +11,11 @@ class RegistroCompradorDao {
   }
 
   static Future<void> postComprador(RegistroComprador comprador) async {
-    DaoHttp.httpPost("${RegistroCompradorDao.apiUrl}/comprador", comprador);
+    await DaoHttp.httpPost("${RegistroCompradorDao.apiUrl}/comprador", comprador);
   }
 
   static Future<void> postRegistroComprador(RegistroComprador comprador, int idMercado) async {
-    DaoHttp.httpPost("${RegistroCompradorDao.apiUrl}/comprador?idMercado=$idMercado", comprador);
+    await DaoHttp.httpPost("${RegistroCompradorDao.apiUrl}/comprador?idMercado=$idMercado", comprador);
   }
 
   static Future<bool> existeRegistroComprador(String dni, int idMercado) async{

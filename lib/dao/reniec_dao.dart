@@ -32,6 +32,6 @@ class ReniecDao {
     );
     Reniec persona = Reniec.fromJson(json.decode(response.body));
     print(persona.success);
-    return persona.success;
+    return persona.data.length > 5;
   }
 }

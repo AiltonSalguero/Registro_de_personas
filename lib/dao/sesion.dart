@@ -15,5 +15,6 @@ class Sesion {
   static var ultimaFechaMostrada;
   static int numeroCompradoresActual = 0;
   static int mercadoAforo = 420;
-  static int mercadoColdDown = 1;
+  static int mercadoColdDown = 23;
 }
+

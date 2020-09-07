@@ -24,11 +24,8 @@ class _PrincipalPageState extends State<PrincipalPage> {
   Widget _buildAforo() {
     return Align(
       alignment: Alignment(0, -0.79),
-      child: Text(
+      child: titulo1Label(
         "Aforo \n ${Sesion.numeroCompradoresActual} / ${Sesion.mercadoAforo}",
-        style: TextStyle(
-          fontSize: 14,
-        ),
       ),
     );
   }
@@ -52,21 +49,35 @@ class _PrincipalPageState extends State<PrincipalPage> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text("Estado: "),
-                Text(Sesion.estadoComprador),
+                RaisedButton(
+                  onPressed: _printSesion,
+                ),
+                titulo1Label("Estado: "),
+                titulo2Label(Sesion.estadoComprador),
               ],
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text("Ultima fecha de entrada: "),
-                Sesion.ultimaFechaMostrada == null ? Text("") : Text(Sesion.ultimaFechaMostrada.toString()),
+                titulo1Label("Ultima fecha de entrada: "),
+                Sesion.ultimaFechaMostrada == null
+                    ? titulo2Label("")
+                    : titulo2Label(Sesion.ultimaFechaMostrada.toString()),
               ],
             )
           ],
         ),
       ),
     );
+  }
+
+  _printSesion() {
+    print(Sesion.compradorActual.dniComprador);
+    print(Sesion.compradorActual.nombres);
+    print(Sesion.estadoComprador);
+    print(Sesion.numeroCompradoresActual);
+    print(Sesion.ultimaFechaMostrada);
+    setState(() {});
   }
 
   Widget _buildDniInput() {
@@ -76,33 +87,32 @@ class _PrincipalPageState extends State<PrincipalPage> {
             inputPrincipalNumber("Ingrese DNI", dniController, mostrarEstado));
   }
 
-  mostrarEstado(BuildContext context) {
+  mostrarEstado(BuildContext context) async{
     String dni = dniController.text;
     if (dni.length != 8) {
       errorDialogAlert(context, "Error", "Ingrese un dni valido.");
+      return 0;
     }
     if (dni == "") {
       errorDialogAlert(context, "No data", "Escriba un dni.");
     } else {
-      if (Dao.existeDni(dni)) {
-
-        print("$dni dni");
-        print("${Sesion.numeroCompradoresActual} a0");
-        Sesion.compradorActual.dniComprador = dni;
-        Dao.validarIngreso(dni);
-
+      bool existe = await Dao.existeDni(dni);
+      print(existe.toString() + " bool");
+      if (existe) {
         setState(() {
+          Sesion.compradorActual.dniComprador = dni;
+          Dao.validarIngreso(dni).then((value) => setState(() {}));
+          print("$dni dni");
+          print("${Sesion.numeroCompradoresActual} a0");
           print("${Sesion.numeroCompradoresActual} a");
           print("${Sesion.compradorActual.nombres} as");
           print("${Sesion.numeroCompradoresActual} b");
         });
       } else {
-        errorDialogAlert(context, "Error", "Ingrese un dni valido.");
+        errorDialogAlert(context, "Error", "Dni no existe.");
       }
     }
   }
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +159,8 @@ class _PrincipalPageState extends State<PrincipalPage> {
               child: Column(
                 children: <Widget>[
                   titulo1Label(Sesion.compradorActual.dniComprador),
-                  Text(Sesion.compradorActual.nombres),
+                  Text(
+                      "${Sesion.compradorActual.nombres} \n ${Sesion.compradorActual.apellidos}"),
                   _buildEstadoPersona(),
                 ],
               ),
