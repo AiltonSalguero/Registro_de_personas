@@ -14,7 +14,7 @@ class Dao {
         Dao.obtenerCompradorConDni(dni);
         Sesion.ultimaFechaMostrada = Sesion.compradorActual.fechaIngreso;
         if (_compradorEstaHabilitado()) {
-          Sesion.numeroCompradoresActual++;
+          Sesion.mercadoActual.aforoActual++;
         }
       } else {
         print("no existe");
@@ -57,7 +57,7 @@ class Dao {
   static registrarCompradorActual() {
     RegistroCompradorDao.postComprador(Sesion.compradorActual);
     RegistroCompradorDao.postRegistroComprador(
-        Sesion.compradorActual, Sesion.idMercado);
+        Sesion.compradorActual, Sesion.mercadoActual.idMercado);
   }
 
   static bool existeDni(String dni) {

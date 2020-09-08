@@ -10,6 +10,7 @@ import 'package:registro/dao/sesion.dart';
 import 'package:registro/dialogs/error_dialog.dart';
 import 'package:registro/util/screen.dart';
 import 'package:registro/util/temaPersonlizado.dart';
+import 'package:registro/widgets/botonPersonalizado.dart';
 import 'package:registro/widgets/inputPersonalizado.dart';
 import 'package:registro/widgets/labelPerzonalizado.dart';
 
@@ -25,7 +26,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
     return Align(
       alignment: Alignment(0, -0.79),
       child: Text(
-        "Aforo \n ${Sesion.numeroCompradoresActual} / ${Sesion.mercadoAforo}",
+        "Aforo \n ${Sesion.mercadoActual.aforoActual} / ${Sesion.mercadoActual.aforo}",
         style: TextStyle(
           fontSize: 14,
         ),
@@ -87,14 +88,14 @@ class _PrincipalPageState extends State<PrincipalPage> {
       if (Dao.existeDni(dni)) {
 
         print("$dni dni");
-        print("${Sesion.numeroCompradoresActual} a0");
+        print("${Sesion.mercadoActual.aforoActual} a0");
         Sesion.compradorActual.dniComprador = dni;
         Dao.validarIngreso(dni);
 
         setState(() {
-          print("${Sesion.numeroCompradoresActual} a");
+          print("${Sesion.mercadoActual.aforoActual} a");
           print("${Sesion.compradorActual.nombres} as");
-          print("${Sesion.numeroCompradoresActual} b");
+          print("${Sesion.mercadoActual.aforoActual} b");
         });
       } else {
         errorDialogAlert(context, "Error", "Ingrese un dni valido.");
@@ -118,6 +119,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
             height: Screen.height * 0.35, // Responsive
             width: double.infinity,
           ),
+          botonTercero("Salida",_toSalida),
           _buildAforo(),
           _buildDniInput(),
           Container(
@@ -173,5 +175,8 @@ class _PrincipalPageState extends State<PrincipalPage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+  _toSalida(){
+    Navigator.of(context).pushReplacementNamed('/salida');
   }
 }
